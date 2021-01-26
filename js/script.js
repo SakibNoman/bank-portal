@@ -6,21 +6,37 @@ loginBtn.addEventListener("click", function () {
     transactionArea.style.display = "block";
 })
 
-//for deposit function
+//for deposit button
 const depositButton = document.getElementById("deposit-btn-id");
 depositButton.addEventListener("click", function () {
-    const depositAmount = document.getElementById("deposit-amount-id").value;
-    const depositNumber = parseFloat(depositAmount);
-    document.getElementById("deposit-amount-id").value = "";
-
-    function update(id,depositNumber) {
-        const current = document.getElementById(id).innerText;
-        const currentNumber = parseFloat(current);
-        const total = depositNumber + currentNumber;
-        document.getElementById(id).innerText = total;
-    }
-    update("current-amount-id",depositNumber);
-    update("current-balance-id",depositNumber);
-
+    const inputAmount = getInput("deposit-amount-id");
+    update("current-amount-id", inputAmount);
+    update("current-balance-id", inputAmount);
+})
+//for withdraw button
+const withdrawButton = document.getElementById("withdraw-btn-id");
+withdrawButton.addEventListener("click", function () {
+    const inputAmount = getInput("withdraw-amount-id");
+    update("withdraw-balance-id", inputAmount);
+    updateNeg("current-balance-id", inputAmount)
 })
 
+function getInput(id) {
+    const inputAmount = document.getElementById(id).value;
+    const inputNumber = parseFloat(inputAmount);
+    document.getElementById(id).value = "";
+    return inputNumber;
+}
+
+function update(id, depositNumber) {
+    const current = document.getElementById(id).innerText;
+    const currentNumber = parseFloat(current);
+    const total = depositNumber + currentNumber;
+    document.getElementById(id).innerText = total;
+}
+function updateNeg(id, depositNumber) {
+    const current = document.getElementById(id).innerText;
+    const currentNumber = parseFloat(current);
+    const total = currentNumber - depositNumber;
+    document.getElementById(id).innerText = total;
+}
